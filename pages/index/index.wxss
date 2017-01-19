@@ -1,0 +1,23 @@
+/**index.wxss**/
+
+.headerSelect{
+  display: flex;
+  overflow-y:hidden;
+}
+.headerItem{
+  flex-direction:row;
+  text-align: center;
+  background: azure;
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.selectHeaderItem{
+  flex-direction:row;
+  border-bottom: 1rpx solid coral;
+  text-align: center;
+  background: azure;
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}

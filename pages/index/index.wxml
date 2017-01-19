@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view>
+  <!--头部选择部分-->
+  <view class="headerSelect">
+    <scroll-view wx:for="{{headerItems}}" scroll-x="true" >
+      <view class="headerItem" bindtap="clickHeaderItem" data-item="{{item}}">{{item.title}}</view>
+    </scroll-view>
+  </view>
+</view>
