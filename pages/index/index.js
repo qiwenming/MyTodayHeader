@@ -15,7 +15,9 @@ Page({
       {id:8, title:'财经' , identy:'caijing'},
       {id:9, title:'时尚' , identy:'shishang'}
     ],
-    itemIdenty:'top'
+    itemIdenty:'top',
+    dataArr:[],
+    postionId:0
   },
   onLoad:function(){
     this.requestHttp('top');
@@ -25,7 +27,6 @@ Page({
   },
 
   clickHeaderItem:function(e){
-    console.log(e);
     var item = e.currentTarget.dataset['item'];
     if(item.identy==this.itemIdenty){
       return;
@@ -34,20 +35,49 @@ Page({
       title: '今日头条-'+item.title
     })
     this.setData({
-      itemIdenty:identy
+      itemIdenty:item.identy,
+      postionId:item.id
     })
-    this.requestHttp(identy);
+    this.requestHttp(item.identy);
   },
 
   requestHttp:function(newType){
     var url = app.globalData.baseUrl + newType;
+    var that = this;
     console.log(url);
+    wx.showNavigationBarLoading();
     wx.request({
       url: url,
       method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       success: function(res){
-        console.log(res);
+        wx.hideNavigationBarLoading();
+        that.globalData.tempArrs = [];//清空数组
+        const dataArrs = res.data.result.data;
+        for(var i=0;i<dataArrs.length;i++){
+          var obj = dataArrs[i];
+          obj.imageArr = that.getImageCount(obj);
+          that.globalData.tempArrs.push(obj);
+        }
+        that.setData({
+          dataArr: that.globalData.tempArrs
+        })
       }
     })
+  },
+  
+  getImageCount:function(obj){
+     if ("thumbnail_pic_s03" in obj) {
+        return [obj.thumbnail_pic_s,obj.thumbnail_pic_s02,obj.thumbnail_pic_s03];  
+      }
+      if ("thumbnail_pic_s02" in obj) {
+          return [obj.thumbnail_pic_s,obj.thumbnail_pic_s02];
+      }
+      if ("thumbnail_pic_s" in obj){
+         return [obj.thumbnail_pic_s];
+      }
+  }
+  ,
+   globalData: {
+    tempArrs: []
   }
 })

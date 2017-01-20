@@ -1,9 +1,31 @@
 <!--index.wxml-->
+<import src="../template/onelayout.wxml"/>
+<import src="../template/threelayout.wxml"/>
+
+<!--<template name="test">
+   <block wx:for="{{imageArr}}" wx:for-item="imageName" wx:key="*this">
+                <image src="{{imageName}}"></image>
+            </block>
+</template>-->
+
+
 <view>
   <!--头部选择部分-->
   <view class="headerSelect">
     <scroll-view wx:for="{{headerItems}}" scroll-x="true" >
-      <view class="headerItem" bindtap="clickHeaderItem" data-item="{{item}}">{{item.title}}</view>
+      <view class="{{item.id==postionId?'selectHeaderItem':'headerItem'}}" bindtap="clickHeaderItem" data-item="{{item}}">{{item.title}}    </view>
     </scroll-view>
   </view>
+
+<view  class="container">
+<scroll-view scroll-y="true">
+    <block wx:for="{{dataArr}}">
+      <template is="{{item.imageArr.length>1 ? 'threelayout' :'onelayout' }}" data="{{...item}}" />
+         <!--<template is="{{'onelayout'}}" data="{{...item}}" />-->
+    </block>
+ </scroll-view>
+ </view>
+
+   
+
 </view>
