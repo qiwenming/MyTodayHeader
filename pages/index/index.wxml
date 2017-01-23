@@ -1,31 +1,52 @@
+
 <!--index.wxml-->
-<import src="../template/onelayout.wxml"/>
-<import src="../template/threelayout.wxml"/>
+<import src="../template/onelayout.wxml" />
+<import src="../template/threelayout.wxml" />
 
 <!--<template name="test">
    <block wx:for="{{imageArr}}" wx:for-item="imageName" wx:key="*this">
                 <image src="{{imageName}}"></image>
             </block>
 </template>-->
-
-
 <view>
+
   <!--头部选择部分-->
-  <view class="headerSelect">
-    <scroll-view wx:for="{{headerItems}}" scroll-x="true" >
-      <view class="{{item.id==postionId?'selectHeaderItem':'headerItem'}}" bindtap="clickHeaderItem" data-item="{{item}}">{{item.title}}    </view>
+  <view class="headerSelectTa">
+    <view class="headerSelect">
+      <scroll-view wx:for="{{headerItems}}" scroll-x="true" class="headerScroll">
+        <view class="{{item.id==postionId?'selectHeaderItem':'headerItem'}}" bindtap="clickHeaderItem" data-item="{{item}}">{{item.title}} </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="container">
+    <scroll-view scroll-y="true">
+      <block wx:for="{{dataArr}}">
+        <template is="{{item.imageArr.length>1 ? 'threelayout' :'onelayout' }}" data="{{...item}}" />
+
+        <!--<template is="{{'onelayout'}}" data="{{...item}}" />-->
+      </block>
     </scroll-view>
   </view>
-
-<view  class="container">
-<scroll-view scroll-y="true">
-    <block wx:for="{{dataArr}}">
-      <template is="{{item.imageArr.length>1 ? 'threelayout' :'onelayout' }}" data="{{...item}}" />
-         <!--<template is="{{'onelayout'}}" data="{{...item}}" />-->
-    </block>
- </scroll-view>
- </view>
-
-   
-
 </view>
+
+
+
+ <!--<view class="movieImg">
+      <image src="{{item.img}}"></image>
+    </view>-->
+    <view class="movieDetail">
+      <view class="movieTitle">
+        <text>{{item.nm}}</text>
+        <image class="m3dimax" src="../../image/movie_3dimax.png" wx:if="{{item['3d'] && item.imax}}"></image>
+        <image class="m3d" src="../../image/movie_3d.png" wx:elif="{{item['3d']}}"></image>
+
+        <!--<image class="m2dimax" src="../../image/movie_3d.png" wx:elif="{{item.ver.indexOf('2D')>0}}"></image>-->
+        <text class="score" wx:if='{{item.preSale !== 1}}'>{{item.sc}}<text style='font-size:12px'>分</text>
+        </text>
+        <text class="wish" wx:else>{{item.wish}}<text style='font-size:12px;'>人想看</text>
+        </text>
+      </view>
+      <view class="type">{{item.cat}}</view>
+      <view class="star">主演:{{item.star}}</view>
+      <view class="showInfo">{{item.showInfo}}</view>
+    </view>

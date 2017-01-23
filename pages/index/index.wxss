@@ -1,6 +1,11 @@
 /**index.wxss**/
 
+/*.headerSelectTa{
+}*/
+
 .headerSelect{
+   position:fixed;
+   z-index: 200;
   display: flex;
   overflow-y:hidden;
 }
@@ -24,6 +29,7 @@
 }
 
 .container{
+  margin-top: 60rpx;
   display:inline-flex;
 }
 
